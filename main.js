@@ -26,7 +26,7 @@ var array = [];
         $(document).ready(function() {
         $.ajax({
         type: "GET",
-        url: "tables_1.txt",
+        url: "https://sites.google.com/site/sc2innumbers/jars/tables_1.txt",
         dataType: "text",
         success: function(data) {processData(data);}
      });
