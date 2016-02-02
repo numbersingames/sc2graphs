@@ -26,7 +26,7 @@ var array = [];
         $(document).ready(function() {
         $.ajax({
         type: "GET",
-        url: "https://sites.google.com/site/sc2innumbers/jars/tables_1.txt",
+        url: "https://cdn.rawgit.com/numbersingames/sc2graphs/c98e99399dba5365c442bb1c4d5ee440c2386dfc/tables_1.txt",
         dataType: "text",
         success: function(data) {processData(data);}
      });
