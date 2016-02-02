@@ -107,7 +107,7 @@ var array = [];
                 for (var j = 0; j < 4; j++) {
                     temp = arrays[line].split(" ");
                     playersTable[l][i][j] = parseInt(temp[0]);
-                    percentageTable[l][i][j] = parseFloat((temp[1]));
+                    //percentageTable[l][i][j] = parsefloat((temp[1]));
                     line++;
                 }
             }
