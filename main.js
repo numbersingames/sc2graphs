@@ -1,9 +1,15 @@
-var array = [];
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+    /* global Highcharts */
+
+
 
     var currentRegion = 0;
-    var currentLeague = 0;
+    var currentLeague = 1;
     var playersTable = new Array();
-    var percentageTable = new Array();
     var charts=[];
     var leagues = ["grandmaster", "master", "diamond", "platinum", "gold", "silver", "bronze"];
     var shortLeagues = [ "GM", "M", "D", "P", "G", "S", "B" ];
@@ -19,7 +25,7 @@ var array = [];
         $(document).ready(function() {
         $.ajax({
         type: "GET",
-        url: "https://cdn.rawgit.com/numbersingames/sc2graphs/c98e99399dba5365c442bb1c4d5ee440c2386dfc/tables_1.txt",
+        url: "https://cdn.rawgit.com/numbersingames/sc2graphs/651e185818b24fd1a924bc0ebaaa2d8d19fb3917/tables_1.txt",
         dataType: "text",
         success: function(data) {processData(data);}
      });
@@ -76,31 +82,30 @@ var array = [];
    
     charts.push(columnChart);
 };
-   
-   
+     
     function processData(allText) {
         
         for (var l = 0; l < 6; l++) {
             playersTable[l] = new Array(7);
-            percentageTable[l] = new Array(7);
+            
             for (var i = 0; i < 7; i++) {
                 playersTable[l][i]= new Array(4);
-                percentageTable[l][i] = new Array(4);
+                
                 for (var j = 0; j < 4; j++) {
                     playersTable[l][i][j] = 0;
-                    percentageTable[l][i][j] = 0.0;
+                   
                 }
             }
         }
         var arrays = allText.split("\n");
        
         var line = 0;
-        var temp;
+        
         for (var l = 1; l < 6; l++) {
             for (var i = 0; i < 7; i++) {
                 for (var j = 0; j < 4; j++) {
-                    temp = arrays[line].split(" ");
-                    playersTable[l][i][j] = parseInt(temp[0]);
+                    
+                    playersTable[l][i][j] = parseInt(arrays[line]);
                     //percentageTable[l][i][j] = parseFloat((temp[1]));
                     line++;
                 }
@@ -125,11 +130,11 @@ var array = [];
          
           
         } 
-        array = allText.split(" ");
         startStacked();
         startPie();
         startColumn();
         setFact();
+        setRegionStats();
         
 };
     
@@ -233,11 +238,30 @@ function setFact() {
         }
     }
     $( "#facts" ).html(factsText);
-    
-    
 };
 
-
+function setRegionStats() {
+    var regionsText = "";
+    var totalT = 0;
+    var totalZ = 0;
+    var totalP = 0;
+    var totalR = 0;
+    var total = 0;
+    for (var i = 1; i < 6; i++) {
+        totalT += playersTable[currentRegion][i][0];
+        totalZ += playersTable[currentRegion][i][1];
+        totalP += playersTable[currentRegion][i][2];
+        totalR += playersTable[currentRegion][i][3];
+    }
+    total+= totalT+totalZ+totalP+totalR;
+    regionsText += "Race representation on " + regions[currentRegion] + " (%):"+ 
+            "<br> Terran: " + parseFloat((totalT / total) *100).toFixed(2)+
+            "<br> Zerg: " + parseFloat((totalZ / total) *100).toFixed(2) +
+            "<br> Protoss: " + parseFloat((totalP / total) *100).toFixed(2) +
+            "<br> Random: " + parseFloat((totalR / total) *100).toFixed(2);
+    
+    $( "#regionStats" ).html(regionsText);
+};
 
 function startPie() {
     
@@ -319,7 +343,8 @@ var changeScene = function() {
     stackedChart.series[5].setData(getAllRegions(currentRegion,5));
     stackedChart.series[6].setData(getAllRegions(currentRegion,6));
     
-    setFact();    
+    setFact();
+    setRegionStats();
 };
 
 var setRegion = function(region) {
