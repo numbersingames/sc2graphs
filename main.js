@@ -1,10 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-    /* global Highcharts */
-
 var array = [];
 
     var currentRegion = 0;
@@ -39,7 +32,7 @@ var array = [];
                credits: {
             enabled: false
         }, 
-               chart: {
+               chart: { 
                     renderTo: 'container2',
                     type: 'column'
                 },
@@ -86,6 +79,7 @@ var array = [];
    
    
     function processData(allText) {
+        
         for (var l = 0; l < 6; l++) {
             playersTable[l] = new Array(7);
             percentageTable[l] = new Array(7);
@@ -107,7 +101,7 @@ var array = [];
                 for (var j = 0; j < 4; j++) {
                     temp = arrays[line].split(" ");
                     playersTable[l][i][j] = parseInt(temp[0]);
-                    //percentageTable[l][i][j] = parsefloat((temp[1]));
+                    //percentageTable[l][i][j] = parseFloat((temp[1]));
                     line++;
                 }
             }
@@ -128,6 +122,7 @@ var array = [];
           playersTable[0][i][1] = totalZ;
           playersTable[0][i][2] = totalP;
           playersTable[0][i][3] = totalR;
+         
           
         } 
         array = allText.split(" ");
@@ -174,31 +169,31 @@ var startStacked = function() {
         },
         series: [{
             name: 'GM',
-            data: playersTable[0][0],
+            data: getAllRegions(currentRegion,0),
             color: 'rgba(255,200,20,1)'
         }, {
             name: 'M',
-            data: playersTable[0][1],
+            data: getAllRegions(currentRegion,1),
             color: 'rgba(100,100,240,1)'
         }, {
             name: 'D',
-            data: playersTable[0][2],
+            data: getAllRegions(currentRegion,2),
             color: 'rgba(150,150,240,1)'
         }, {
             name: 'P',
-            data: playersTable[0][3],
+            data: getAllRegions(currentRegion,3),
             color: 'rgba(229,228,226,1)'
         }, {
             name: 'G',
-            data: playersTable[0][4],
+            data: getAllRegions(currentRegion,4),
             color: 'rgba(255,215,0,1)'
         }, {
             name: 'S',
-            data: playersTable[0][5],
+            data: getAllRegions(currentRegion,5),
             color: 'rgba(192,192,192,1)'
         }, {
             name: 'B',
-            data: playersTable[0][6],
+            data: getAllRegions(currentRegion,6),
             color: 'rgba(205, 127, 50,0.9)'
         }]
     
@@ -206,7 +201,14 @@ var startStacked = function() {
     charts.push(stackedChart);
 };    
 
-
+function getAllRegions(r, l) {
+    var list = [];
+    list.push(playersTable[r][l][0]);
+    list.push(playersTable[r][l][1]);
+    list.push(playersTable[r][l][2]);
+    list.push(playersTable[r][l][3]);
+    return list;
+};
 
 function getPercents(race) {
     var upto = 0;
@@ -291,8 +293,7 @@ function startPie() {
     charts.push(pieChart);
 };
 
-var changeScene = function() {
-    
+var changeScene = function() { 
     pieChart.series[0].setData([
         ['T', playersTable[currentRegion][currentLeague][0]],
         ['Z', playersTable[currentRegion][currentLeague][1]],
@@ -308,13 +309,16 @@ var changeScene = function() {
     columnChart.setTitle({text:''+leagues[currentLeague] + " - " + regions[currentRegion]}); 
     
     stackedChart.setTitle({text:'races split by league - ' + regions[currentRegion]});
-    stackedChart.series[0].setData(playersTable[currentRegion][0]);
-    stackedChart.series[1].setData(playersTable[currentRegion][1]);
-    stackedChart.series[2].setData(playersTable[currentRegion][2]);
-    stackedChart.series[3].setData(playersTable[currentRegion][3]);
-    stackedChart.series[4].setData(playersTable[currentRegion][4]);
-    stackedChart.series[5].setData(playersTable[currentRegion][5]);
-    stackedChart.series[6].setData(playersTable[currentRegion][6]);
+    
+
+    stackedChart.series[0].setData(getAllRegions(currentRegion,0));
+    stackedChart.series[1].setData(getAllRegions(currentRegion,1));
+    stackedChart.series[2].setData(getAllRegions(currentRegion,2));
+    stackedChart.series[3].setData(getAllRegions(currentRegion,3));
+    stackedChart.series[4].setData(getAllRegions(currentRegion,4));
+    stackedChart.series[5].setData(getAllRegions(currentRegion,5));
+    stackedChart.series[6].setData(getAllRegions(currentRegion,6));
+    
     setFact();    
 };
 
