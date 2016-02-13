@@ -18,7 +18,7 @@ var currentRegion = 0;
         $(document).ready(function() {
         $.ajax({
         type: "GET",
-        url: "https://cdn.rawgit.com/numbersingames/sc2graphs/master/tables5.txt",
+        url: "https://cdn.rawgit.com/numbersingames/sc2graphs/master/tables5",
         dataType: "text",
         success: function(data) {processData(data);}
      });
