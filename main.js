@@ -18,13 +18,13 @@ var currentRegion = 0;
         $(document).ready(function() {
         $.ajax({
         type: "GET",
-        url: "https://cdn.rawgit.com/numbersingames/sc2graphs/master/tables5",
+        url: "https://cdn.rawgit.com/numbersingames/sc2graphs/master/tables6",
         dataType: "text",
         success: function(data) {processData(data);}
      });
 });  
     };
-    //https://cdn.rawgit.com/numbersingames/master/dc66ff825d01d72ae8604a385b7297f25dec43e3/tables3.txt
+    
    var startColumn = function() { 
        
         columnChart = new Highcharts.Chart({     
