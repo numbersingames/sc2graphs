@@ -1,7 +1,7 @@
     /* global Highcharts, parseFloat */
 
 var currentRegion = 0;
-    var currentLeague = 0;
+    var currentLeague = 1;
     var playersTable = new Array();
     var charts=[];
     var leagues = ["grandmaster", "master", "diamond", "platinum", "gold", "silver", "bronze"];
@@ -18,7 +18,7 @@ var currentRegion = 0;
         $(document).ready(function() {
         $.ajax({
         type: "GET",
-        url: "https://cdn.rawgit.com/numbersingames/sc2graphs/master/tables6",
+        url: "https://cdn.rawgit.com/numbersingames/sc2graphs/master/tables7",
         dataType: "text",
         success: function(data) {processData(data);}
      });
@@ -373,6 +373,7 @@ var setRegion = function(region) {
 };
 
 var setLeague = function(league) {
+    if (league === 0) league =1;
   currentLeague = league;
   changeScene();
 };
