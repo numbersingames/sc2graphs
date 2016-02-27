@@ -1,7 +1,7 @@
     /* global Highcharts, parseFloat */
 
 var currentRegion = 0;
-    var currentLeague = 1;
+    var currentLeague = 0;
     var playersTable = new Array();
     var charts=[];
     var leagues = ["grandmaster", "master", "diamond", "platinum", "gold", "silver", "bronze"];
@@ -18,7 +18,7 @@ var currentRegion = 0;
         $(document).ready(function() {
         $.ajax({
         type: "GET",
-        url: "https://cdn.rawgit.com/numbersingames/sc2graphs/master/tables7",
+        url: "https://cdn.rawgit.com/numbersingames/sc2graphs/master/tables8",
         dataType: "text",
         success: function(data) {processData(data);}
      });
@@ -356,8 +356,7 @@ var changeScene = function() {
 };
 
 function ResetOptions(themeSelected) {
-    // Fortunately, Highcharts returns the reference to defaultOptions itself
-    // We can manipulate this and delete all the properties
+   
     var defaultOptions = Highcharts.getOptions();
     for (var prop in defaultOptions) {
         if (typeof defaultOptions[prop] !== 'function') delete defaultOptions[prop];
@@ -373,7 +372,6 @@ var setRegion = function(region) {
 };
 
 var setLeague = function(league) {
-    if (league === 0) league =1;
   currentLeague = league;
   changeScene();
 };
